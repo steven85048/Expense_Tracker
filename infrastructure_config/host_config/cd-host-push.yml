@@ -1,0 +1,7 @@
+---
+- hosts: all
+  gather_facts: no
+  remote_user: root
+
+  roles:
+    - roles/cd-host-push

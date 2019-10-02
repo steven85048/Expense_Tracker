@@ -1,0 +1,13 @@
+---
+- name: Add a new provision-central user
+  user:
+    name=provision-central
+    password={{ provision-central-password }}
+
+- name: Add no-password sudo permissions for new user
+  copy:
+    dest: "/etc/sudoers.d/provision"
+    content: "provision\tALL=(ALL)\tNOPASSWD: ALL"
+
+- name: Install the default SSH key for accessing slave machines
+  shell: ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""

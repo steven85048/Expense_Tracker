@@ -1,0 +1,8 @@
+---
+- name: install python and ansible
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - python
+      - ansible
