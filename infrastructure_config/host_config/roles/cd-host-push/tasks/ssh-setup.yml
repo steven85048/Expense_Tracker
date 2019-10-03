@@ -1,6 +1,6 @@
 ---
 - name: Get the provision-central-password from s3
-  aws-s3:
+  aws_s3:
     bucket: expense-tracker-secrets
     object: /host-secrets/{{ item }}
     dest: ~/user-passwords/{{ item }}
@@ -20,4 +20,4 @@
     content: "provision\tALL=(ALL)\tNOPASSWD: ALL"
 
 - name: Install the default SSH key for accessing slave machines
-  shell: ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
+  shell: ssh-keygen -b 2048 -t rsa -f ~/.ssh/expense-tracker-id_rsa -q -N ""
