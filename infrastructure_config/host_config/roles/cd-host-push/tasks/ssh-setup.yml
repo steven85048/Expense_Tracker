@@ -1,13 +1,19 @@
 ---
+- name: Create secrets directory under the root user
+  file:
+    path: /home/root/user-passwords
+    state: directory
+    mode: '0700'
+
 - name: Get the provision-central-password from s3
   aws_s3:
     bucket: expense-tracker-secrets
     object: /host-secrets/{{ item }}
-    dest: ~/user-passwords/{{ item }}
+    dest: /home/root/user-passwords/{{ item }}
     mode: get
   loop:
-    - provision-central-password
-    - provision-password
+    - "provision-central-password"
+    - "provision-password"
 
 - name: Add a new provision-central user
   user:
