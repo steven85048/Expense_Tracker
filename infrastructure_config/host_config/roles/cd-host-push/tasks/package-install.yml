@@ -7,6 +7,11 @@
       - python
       - ansible
 
+- name: install pip
+  easy_install:
+    name: pip
+    state: latest
+
 - name: install boto/botocore for s3 through pip
   pip:
     name: "{{ item }}"
