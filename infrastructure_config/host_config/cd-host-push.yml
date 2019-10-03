@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  connection: network_cli
   gather_facts: no
   remote_user: root
 
