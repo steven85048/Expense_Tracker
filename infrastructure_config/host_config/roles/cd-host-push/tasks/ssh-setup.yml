@@ -12,7 +12,7 @@
 - name: Add a new provision-central user
   user:
     name=provision-central
-    password={{ provision-central-password }}
+    password="{{ lookup('file', ~/user-passwords/provision-central-password }}"
 
 - name: Add no-password sudo permissions for new user
   copy:
