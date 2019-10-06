@@ -9,7 +9,7 @@
 
   - name: Install the default SSH key for accessing slave machines
     shell: ssh-keygen -b 2048 -t rsa -f ~/.ssh/expense-tracker-id_rsa -q -N ""
-    when: et-id_rsa-exists == False
+    when: et-id_rsa-exists.exists == False
 
   - name: Check expense-tracker-github-id_rsa exists
     stat:
@@ -22,7 +22,7 @@
       object: /host-secrets/expense-tracker-github-id_rsa
       dest: ~/.ssh/expense-tracker-github-id_rsa
       mode: get
-    when: et-github-id_rsa-exists == False
+    when: et-github-id_rsa-exists.exists == False
 
   - name: Set the git remote URL to use SSH
     shell: 'git remote set-url origin git@github.com:steven85048/Expense_Tracker.git'
