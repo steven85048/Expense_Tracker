@@ -24,8 +24,16 @@
       mode: get
     when: et_github_id_rsa_exists.stat.exists == False
 
-  - name: Start the ssh-agent daemon
+  - name: Check if ssh-agent already running under provision-central user
+    shell: 'pgrep -f "ssh-agent" -u "provision-central"'
+    register: ssh_agent_running
+    failed_when: "ssh_agent_running.rc == 2"
+    check_mode: no
+    changed_when: false
+
+  - name: Start the ssh-agent daemon when not running 
     shell: 'eval $(ssh-agent)'
+    when: ssh_agent_running.rc == 1
 
   - name: Add the ssh keys to the ssh-agent
     shell: 'ssh-add {{ item }}'
