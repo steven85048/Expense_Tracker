@@ -33,7 +33,7 @@
 
   - name: Start the ssh-agent daemon when not running 
     shell: 'eval $(ssh-agent)'
-    when: ssh_agent_running.rc == 1
+    when: ssh_agent_running.stdout == ""
 
   - name: Add the ssh keys to the ssh-agent
     shell: 'ssh-add {{ item }}'
