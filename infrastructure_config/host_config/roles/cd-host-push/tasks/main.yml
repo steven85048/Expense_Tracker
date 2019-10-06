@@ -1,3 +1,4 @@
 ---
 - include: package-install.yml
+- include: provision-user-setup.yml
 - include: ssh-setup.yml

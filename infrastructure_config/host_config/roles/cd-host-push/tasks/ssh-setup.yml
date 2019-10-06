@@ -1,29 +1,37 @@
+# This playbook installs the deploy key private key for this host to allow for automatic pulls of the repository
+# Must be run after provision-central user setup
 ---
-- name: Create secrets directory under the root user
-  file:
-    path: /home/root/user-passwords
-    state: directory
-    mode: '0700'
+- block:
+  - name: Check expense-tracker-id_rsa exists
+    stat:
+      path: ~/.ssh/expense-tracker-id_rsa
+    register: et-id_rsa-exists
 
-- name: Get the provision-central-password from s3
-  aws_s3:
-    bucket: expense-tracker-secrets
-    object: /host-secrets/{{ item }}
-    dest: /home/root/user-passwords/{{ item }}
-    mode: get
-  loop:
-    - "provision-central-password"
-    - "provision-password"
+  - name: Install the default SSH key for accessing slave machines
+    shell: ssh-keygen -b 2048 -t rsa -f ~/.ssh/expense-tracker-id_rsa -q -N ""
+    when: et-id_rsa-exists == False
 
-- name: Add a new provision-central user
-  user:
-    name=provision-central
-    password="{{ lookup('file', '/home/root/user-passwords/provision-central-password') }}"
+  - name: Check expense-tracker-github-id_rsa exists
+    stat:
+      path: ~/.ssh/expense-tracker-github-id_rsa
+    register: et-github-id_rsa-exists
 
-- name: Add no-password sudo permissions for new user
-  copy:
-    dest: "/etc/sudoers.d/provision"
-    content: "provision\tALL=(ALL)\tNOPASSWD: ALL"
+  - name: Install the github private key from S3
+    aws_s3:
+      bucket: expense-tracker-secrets
+      object: /host-secrets/expense-tracker-github-id_rsa
+      dest: ~/.ssh/expense-tracker-github-id_rsa
+      mode: get
+    when: et-github-id_rsa-exists == False
 
-- name: Install the default SSH key for accessing slave machines
-  shell: ssh-keygen -b 2048 -t rsa -f ~/.ssh/expense-tracker-id_rsa -q -N ""
+  - name: Start the ssh-agent daemon
+    shell: 'eval $(ssh-agent)'
+
+  - name: Add the ssh keys to the ssh-agent
+    shell: 'ssh-add {{ item }}'
+    loop:
+      - ~/.ssh/expense-tracker-id_rsa
+      - ~/.ssh/expense-tracker-github-id_rsa
+
+  become: yes
+  become_user: provision-central
