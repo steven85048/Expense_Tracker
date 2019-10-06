@@ -24,6 +24,9 @@
       mode: get
     when: et-github-id_rsa-exists == False
 
+  - name: Set the git remote URL to use SSH
+    shell: 'git remote set-url origin git@github.com:steven85048/Expense_Tracker.git'
+
   - name: Start the ssh-agent daemon
     shell: 'eval $(ssh-agent)'
 
