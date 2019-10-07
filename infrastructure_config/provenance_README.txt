@@ -50,5 +50,5 @@ Playbook for creating an ansible control host for an inventory of slave hosts:
 
 Note that SSH automatically uses the ~/.ssh/id_rsa when sshing onto a host; in order to specify what private key that ssh uses, need to configure a .ssh/config (https://stackoverflow.com/questions/2419566/best-way-to-use-multiple-ssh-private-keys-on-one-client)
 
-To kill all ssh-agent processes (or all that have ssh-agent in the name:
-    `pgrep -f "ssh-agent" | while read line ; do kill -9 $line ; done`
+To kill all ssh-agent processes (or all that have ssh-agent in the name) under user provision-central:
+    `pgrep -f "ssh-agent" -u "provision-central" | while read line ; do kill -9 $line ; done`

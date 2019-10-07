@@ -31,6 +31,10 @@
     check_mode: no
     changed_when: false
 
+  - name: Print the pgrep output
+    debug:
+      msg: "The output of pgrep is: {{ ssh_agent_running }}"
+
   - block:
     - name: Start the ssh-agent daemon when not running 
       shell: 'ssh-agent | head -n 2'
@@ -49,7 +53,7 @@
         block: |
           {{ ssh_agent_environment_set.stdout }}
 
-    #when: ssh_agent_running.stdout == ""
+    when: ssh_agent_running.stdout == ""
 
   - name: Add the ssh keys to the ssh-agent
     shell: 'exec bash && ssh-add {{ item }}'
