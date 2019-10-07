@@ -25,8 +25,9 @@
     when: et_github_id_rsa_exists.stat.exists == False
 
   # Gets all processes with provision-central and ssh-agent EXCEPT for the grep process searching this
+  # In addition, modify the user column to have more characters
   - name: Check if ssh-agent already running under provision-central user
-    shell: 'ps aux | grep "provision-central.*ssh-agent" | grep -v "grep"'
+    shell: 'ps axo user:20,pid,pcpu,pmem,vsz,rss,tty,stat,start,time,comm | grep "provision-central.*ssh-agent" | grep -v "grep"'
     register: ssh_agent_running
     failed_when: "ssh_agent_running.rc == 2"
     check_mode: no
@@ -56,6 +57,9 @@
 
     when: ssh_agent_running.stdout == ""
 
+  # Note that if ssh-agent was started without setting the .bashrc, this command will fail
+  # In this case, loosen the above when when condition so that the block is run, and stop any
+  # previously running ssh-agent. 
   - name: Add the ssh keys to the ssh-agent
     shell: 'exec bash && ssh-add {{ item }}'
     loop:
