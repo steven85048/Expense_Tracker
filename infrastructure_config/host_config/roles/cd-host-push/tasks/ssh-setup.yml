@@ -26,7 +26,7 @@
 
   - name: Change permissions of all .ssh files
     file:
-      src: "{{ item.src }}"
+      path: "{{ item.src }}"
       mode: 0600
     with_filetree: ~/.ssh
 
