@@ -1,6 +1,6 @@
 # Sets up a github clone on the main host
 --- 
-block:
+- block:
   - name: Check if repository already exists
     stat:
       path: ~/Expense_Tracker
