@@ -38,6 +38,7 @@
 
     - name: Delete ssh-agent-block
       blockinfile:
+        dest: ~/.profile
         marker_begin: "< ssh_agent_config >"
         marker_end: "<!-- ssh_agent_config -->"
         block: ""
@@ -50,7 +51,7 @@
           {{ ssh_agent_environment_set }}
           <!-- ssh_agent_config -->
 
-    when: ssh_agent_running.stdout == ""
+    #when: ssh_agent_running.stdout == ""
 
   - name: Add the ssh keys to the ssh-agent
     shell: 'ssh-add {{ item }}'
