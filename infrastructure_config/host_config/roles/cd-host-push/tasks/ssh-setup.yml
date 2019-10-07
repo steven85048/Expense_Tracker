@@ -28,7 +28,7 @@
     file:
       path: "{{ item.src }}"
       mode: 0600
-    with_filetree: ~/.ssh
+    with_filetree: /home/provision-central/.ssh
 
   # Gets all processes with provision-central and ssh-agent EXCEPT for the grep process searching this
   # In addition, modify the user column to have more characters
