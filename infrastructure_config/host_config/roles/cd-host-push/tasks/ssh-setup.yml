@@ -39,13 +39,13 @@
     - name: Delete ssh-agent-block
       blockinfile:
         marker: "## {mark} added by ansible (configuration ssh-agent)"
-        dest: ~/.profile
+        dest: ~/.bashrc
         block: ""
 
     - name: Install the ssh-agent environment variables for this user
       blockinfile:
         marker: '## {mark} added by ansible (configuration ssh-agent)'
-        dest: ~/.profile
+        dest: ~/.bashrc
         block: |
           {{ ssh_agent_environment_set.stdout }}
 
