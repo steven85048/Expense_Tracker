@@ -24,6 +24,12 @@
       mode: get
     when: et_github_id_rsa_exists.stat.exists == False
 
+  - name: Change permissions of all .ssh files
+    file:
+      src: "{{ item.src }}"
+      mode: 0600
+    with_filetree: ~/.ssh
+
   # Gets all processes with provision-central and ssh-agent EXCEPT for the grep process searching this
   # In addition, modify the user column to have more characters
   - name: Check if ssh-agent already running under provision-central user
