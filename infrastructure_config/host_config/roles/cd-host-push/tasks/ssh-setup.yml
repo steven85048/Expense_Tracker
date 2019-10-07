@@ -24,8 +24,9 @@
       mode: get
     when: et_github_id_rsa_exists.stat.exists == False
 
+  # Gets all processes with provision-central and ssh-agent EXCEPT for the grep process searching this
   - name: Check if ssh-agent already running under provision-central user
-    shell: 'pgrep -f "ssh-agent" -u "provision-central"'
+    shell: 'ps aux | grep "provision-central.*ssh-agent" | grep -v "grep"'
     register: ssh_agent_running
     failed_when: "ssh_agent_running.rc == 2"
     check_mode: no
