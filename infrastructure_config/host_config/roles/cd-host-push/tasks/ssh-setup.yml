@@ -42,12 +42,15 @@
         dest: ~/.bashrc
         block: ""
 
-    - name: Install the ssh-agent environment variables for this user
+    - name: Update bashrc with ssh-agent environment variable set
       blockinfile:
         marker: '## {mark} added by ansible (configuration ssh-agent)'
         dest: ~/.bashrc
         block: |
           {{ ssh_agent_environment_set.stdout }}
+
+    - name: Reset bash
+      shell: "exec bash"
 
     #when: ssh_agent_running.stdout == ""
 
