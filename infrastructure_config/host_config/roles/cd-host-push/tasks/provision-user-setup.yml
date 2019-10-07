@@ -17,8 +17,9 @@
 
 - name: Add a new provision-central user
   user:
-    name=provision-central
-    password="{{ lookup('file', '/home/root/user-passwords/provision-central-password') }}"
+    name: provision-central
+    password: "{{ lookup('file', '/home/root/user-passwords/provision-central-password') }}"
+    shell: /bin/bash
 
 - name: Add no-password sudo permissions for new user
   copy:

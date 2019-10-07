@@ -7,9 +7,10 @@
     register: et_repo_exists
 
   - name: Clone the Expense_Tracker repo
-    shell: 'exec bash && git clone git@github.com:steven85048/Expense_Tracker.git'
+    shell: 'source ~/.bashrc && git clone git@github.com:steven85048/Expense_Tracker.git'
     args:
-      chdir: ~/
+      chdir: /home/provision-central/
+      executable: /bin/bash
     when: et_repo_exists.stat.exists == False
 
   become: yes
