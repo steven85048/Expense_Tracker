@@ -31,7 +31,7 @@
     check_mode: no
     changed_when: false
 
-  block:
+  - block:
     - name: Start the ssh-agent daemon when not running 
       shell: 'ssh-agent | head -n 2'
       register: ssh_agent_environment_set
@@ -50,7 +50,7 @@
           {{ ssh_agent_environment_set }}
           <!-- ssh_agent_config -->
 
-  when: ssh_agent_running.stdout == ""
+    when: ssh_agent_running.stdout == ""
 
   - name: Add the ssh keys to the ssh-agent
     shell: 'ssh-add {{ item }}'
