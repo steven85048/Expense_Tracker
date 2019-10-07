@@ -4,6 +4,7 @@
     name: "{{ packages }}"
   vars:
     packages:
+      - git
       - python
       - python-pip
       - ansible

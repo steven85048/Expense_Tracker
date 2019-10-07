@@ -2,6 +2,4 @@
 - include: package-install.yml
 - include: provision-user-setup.yml
 - include: ssh-setup.yml
-
-- name: Set the git remote URL to use SSH
-  shell: 'git remote set-url origin git@github.com:steven85048/Expense_Tracker.git'
+- include: git-setup.yml

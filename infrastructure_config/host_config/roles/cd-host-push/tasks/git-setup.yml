@@ -1,0 +1,15 @@
+# Sets up a github clone on the main host
+--- 
+block:
+  - name: Check if repository already exists
+    stat:
+      path: ~/Expense_Tracker
+    register: et_repo_exists
+
+  - name: Clone the Expense_Tracker repo
+    shell: 'exec bash && git clone git@github.com:steven85048/Expense_Tracker.git'
+    chdir: ~/
+    when: et_repo_exists.stat.exists == False
+
+  become: yes
+  become_user: provision-central
