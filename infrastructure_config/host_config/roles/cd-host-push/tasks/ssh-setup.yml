@@ -31,9 +31,29 @@
     check_mode: no
     changed_when: false
 
-  - name: Start the ssh-agent daemon when not running 
-    shell: 'eval $(ssh-agent)'
-    when: ssh_agent_running.stdout == ""
+  block:
+    - name: Start the ssh-agent daemon when not running 
+      shell: 'ssh-agent | head -n 2'
+      register: ssh_agent_environment_set
+
+    - name: Delete previous ssh-auth-sock line if applicable
+      lineinfile: 
+        dest: ~/.profile
+        regexp: '^SSH_AUTH_SOCK='
+        line: ''
+
+    - name: Delete previous ssh-agent-pid line if applicable
+      lineinfile: 
+        dest: ~/.profile
+        regexp: '^SSH_AGENT_PID='
+        line: ''
+
+    - name: Install the ssh-agent environment variables for this user
+      lineinfile:
+        dest: ~/.profile
+        line: "{{ ssh_agent_environment_set }}"
+        
+  when: ssh_agent_running.stdout == ""
 
   - name: Add the ssh keys to the ssh-agent
     shell: 'ssh-add {{ item }}'
