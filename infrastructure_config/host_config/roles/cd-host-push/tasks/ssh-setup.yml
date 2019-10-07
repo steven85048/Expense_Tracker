@@ -52,7 +52,7 @@
     #when: ssh_agent_running.stdout == ""
 
   - name: Add the ssh keys to the ssh-agent
-    shell: '. ~/.bashrc && ssh-add {{ item }}'
+    shell: 'exec bash && ssh-add {{ item }}'
     loop:
       - ~/.ssh/expense-tracker-id_rsa
       - ~/.ssh/expense-tracker-github-id_rsa
