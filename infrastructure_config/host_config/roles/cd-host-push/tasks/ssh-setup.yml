@@ -36,23 +36,20 @@
       shell: 'ssh-agent | head -n 2'
       register: ssh_agent_environment_set
 
-    - name: Delete previous ssh-auth-sock line if applicable
-      lineinfile: 
-        dest: ~/.profile
-        regexp: '^SSH_AUTH_SOCK='
-        line: ''
-
-    - name: Delete previous ssh-agent-pid line if applicable
-      lineinfile: 
-        dest: ~/.profile
-        regexp: '^SSH_AGENT_PID='
-        line: ''
+    - name: Delete ssh-agent-block
+      blockinfile:
+        marker_begin: "< ssh_agent_config >"
+        marker_end: "<!-- ssh_agent_config -->"
+        block: ""
 
     - name: Install the ssh-agent environment variables for this user
-      lineinfile:
+      blockinfile:
         dest: ~/.profile
-        line: "{{ ssh_agent_environment_set }}"
-        
+        block: |
+          < ssh_agent_config >
+          {{ ssh_agent_environment_set }}
+          <!-- ssh_agent_config -->
+
   when: ssh_agent_running.stdout == ""
 
   - name: Add the ssh keys to the ssh-agent
