@@ -7,7 +7,7 @@
     register: et_repo_exists
 
   - name: Clone the Expense_Tracker repo
-    shell: 'source ~/.bashrc && git clone git@github.com:steven85048/Expense_Tracker.git'
+    shell: 'source /home/provision-central/.profile && git clone git@github.com:steven85048/Expense_Tracker.git'
     args:
       chdir: /home/provision-central/
       executable: /bin/bash
