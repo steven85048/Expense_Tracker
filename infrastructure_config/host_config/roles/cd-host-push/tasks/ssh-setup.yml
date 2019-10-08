@@ -51,13 +51,13 @@
     - name: Delete ssh-agent-block
       blockinfile:
         marker: "## {mark} added by ansible (configuration ssh-agent)"
-        dest: ~/.profile
+        dest: /home/provision-central/.profile
         block: ""
 
     - name: Update bashrc with ssh-agent environment variable set
       blockinfile:
         marker: '## {mark} added by ansible (configuration ssh-agent)'
-        dest: ~/.profile
+        dest: /home/provision-central/.profile
         block: |
           {{ ssh_agent_environment_set.stdout }}
 
@@ -69,8 +69,8 @@
   - name: Add the ssh keys to the ssh-agent
     shell: 'source /home/provision-central/.profile && ssh-add {{ item }}'
     loop:
-      - ~/.ssh/expense-tracker-id_rsa
-      - ~/.ssh/expense-tracker-github-id_rsa
+      - /home/provision-central/.ssh/expense-tracker-id_rsa
+      - /home/provision-central/.ssh/expense-tracker-github-id_rsa
     args:
       executable: /bin/bash
 
