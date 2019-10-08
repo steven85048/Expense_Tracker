@@ -74,5 +74,11 @@
     args:
       executable: /bin/bash
 
+  - name: Add ssh config to allow for ssh agent forwarding
+    file:
+      src: ssh_config
+      dest: /home/provision-central/.ssh/config
+      mode: 0770
+
   become: yes
   become_user: provision-central
