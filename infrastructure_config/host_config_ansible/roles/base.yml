@@ -1,0 +1,8 @@
+# This role defines the base configuration settings for all microservice instances 
+---
+- hosts: all
+  gather_facts: no
+  remote_user: root
+
+  roles:
+    - roles/root
