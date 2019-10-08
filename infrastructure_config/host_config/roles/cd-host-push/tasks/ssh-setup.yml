@@ -71,6 +71,8 @@
     loop:
       - ~/.ssh/expense-tracker-id_rsa
       - ~/.ssh/expense-tracker-github-id_rsa
+    args:
+      executable: /bin/bash
 
   become: yes
   become_user: provision-central
