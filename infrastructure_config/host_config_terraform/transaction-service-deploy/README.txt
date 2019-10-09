@@ -1,0 +1,2 @@
+Terraform pipeline for provisioning the transaction-service infrastructure from the command host. 
+TODO: This only sets the basic configurations currently, so it may be worth creating a pre-built AMI with base configurations with Packer.
