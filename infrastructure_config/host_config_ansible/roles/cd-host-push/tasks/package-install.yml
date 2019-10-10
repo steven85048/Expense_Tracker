@@ -1,5 +1,5 @@
 ---
-- name: install python and ansible
+- name: apt install packages
   apt:
     name: "{{ packages }}"
   vars:
@@ -8,6 +8,7 @@
       - python
       - python-pip
       - ansible
+      - unzip
 
 - name: install boto/botocore for s3 through pip
   pip:
@@ -16,3 +17,9 @@
     - botocore
     - boto
     - boto3
+
+- name: Extract zipped file into searched executables
+  unarchive: 
+    src: https://releases.hashicorp.com/terraform/0.12.10/terraform_0.12.10_linux_amd64.zip
+    dest: /usr/local/bin
+    remote_src: yes
