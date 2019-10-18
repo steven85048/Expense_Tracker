@@ -68,7 +68,7 @@ resource "aws_iam_role_policy" "cd-push-host-policy" {
             "Sid": "PassrolePermissions",
             "Effect": "Allow",
             "Action": "iam:PassRole",
-            "Resource": ["arn:aws:iam:::role/${aws_iam_role.transaction-service-role.name}"]
+            "Resource": ["arn:aws:iam:::role/${aws_iam_role.transaction-service-assume-role.name}"]
         }
     ]
 }

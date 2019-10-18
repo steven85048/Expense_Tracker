@@ -1,7 +1,3 @@
-inputs = {
-    aws_region = "us-east-2"
-}
-
-terraform {
-    source = "./"
+include {
+    path = "${find_in_parent_folders()}"
 }

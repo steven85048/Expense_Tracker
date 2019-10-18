@@ -25,7 +25,7 @@ resource "aws_iam_instance_profile" "transaction-service-profile" {
 
 resource "aws_iam_role_policy" "transaction-service-policy" {
     name = "transaction-service-policy"
-    role = "${aws_iam_role.transaction-service-role.id}"
+    role = "${aws_iam_role.transaction-service-assume-role.id}"
     policy = <<EOF
 {
     "Version": "2012-10-17",
