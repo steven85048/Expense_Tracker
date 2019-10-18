@@ -1,4 +1,4 @@
-resource "aws_iam_role" "cd-push-host" {
+resource "aws_iam_role" "cd-push-host-assume-role" {
     name = "cd-push-host-assume-role"
 
     assume_role_policy = <<EOF
@@ -20,12 +20,12 @@ EOF
 
 resource "aws_iam_instance_profile" "cd-push-host-profile" {
     name = "cd-push-host-profile"
-    role = "${aws_iam_role.cd-push-host.name}"
+    role = "${aws_iam_role.cd-push-host-assume-role.name}"
 }
 
 resource "aws_iam_role_policy" "cd-push-host-policy" {
     name = "cd-push-host-policy"
-    role = "${aws_iam_role.cd-push-host.id}"
+    role = "${aws_iam_role.cd-push-host-assume-role.id}"
     policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -68,7 +68,7 @@ resource "aws_iam_role_policy" "cd-push-host-policy" {
             "Sid": "PassrolePermissions",
             "Effect": "Allow",
             "Action": "iam:PassRole",
-            "Resource": []
+            "Resource": ["arn:aws:iam:::role/${aws_iam_role.transaction-service-role.name}"]
         }
     ]
 }

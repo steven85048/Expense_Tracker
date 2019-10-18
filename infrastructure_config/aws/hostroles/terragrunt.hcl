@@ -1,7 +1,5 @@
-remote_state {
-    config = {
-       region = "us-east-2"
-    }
+inputs = {
+    aws_region = "us-east-2"
 }
 
 terraform {

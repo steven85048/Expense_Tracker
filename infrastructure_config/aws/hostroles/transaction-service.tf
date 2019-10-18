@@ -1,5 +1,5 @@
-resource "aws_iam_role" "cd-push-host" {
-    name = "cd-push-host-assume-role"
+resource "aws_iam_role" "transaction-service-assume-role" {
+    name = "transaction-service-role"
 
     assume_role_policy = <<EOF
 {
@@ -18,14 +18,14 @@ resource "aws_iam_role" "cd-push-host" {
 EOF
 }
 
-resource "aws_iam_instance_profile" "cd-push-host-profile" {
-    name = "cd-push-host-profile"
-    role = "${aws_iam_role.cd-push-host.name}"
+resource "aws_iam_instance_profile" "transaction-service-profile" {
+    name = "transaction-service-profile"
+    role = "${aws_iam_role.transaction-service-assume-role.name}"
 }
 
-resource "aws_iam_role_policy" "cd-push-host-policy" {
-    name = "cd-push-host-policy"
-    role = "${aws_iam_role.cd-push-host.id}"
+resource "aws_iam_role_policy" "transaction-service-policy" {
+    name = "transaction-service-policy"
+    role = "${aws_iam_role.transaction-service-role.id}"
     policy = <<EOF
 {
     "Version": "2012-10-17",
