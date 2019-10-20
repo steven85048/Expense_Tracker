@@ -6,7 +6,8 @@ remote_state {
         bucket = "expense-tracker-terraform"
         key = "${path_relative_to_include()}/terraform.tfstate"
         region = "us-east-2"
-        #dynamodb_table = "terraform-locks"
+        #dynamodb_table = "expense-tracker-terraform-locks"
+        dynamodb_table = "terraform-state-lock-dynamo"
     }
 }
 
