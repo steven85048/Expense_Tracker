@@ -20,7 +20,7 @@ data "aws_ami" "latest-ubuntu" {
     }
 }
 
-resource "aws_instance" "transaction-service" {
+resource "aws_instance" "cd-host-push" {
     ami = "${data.aws_ami.latest-ubuntu.id}"
     instance_type = "${var.instance}"
     key_name = "${aws_key_pair.host_key.key_name}"
@@ -31,6 +31,7 @@ resource "aws_instance" "transaction-service" {
     connection {
         private_key = "${file(var.private_key)}"
         user = "${var.ansible_user}"
+        host = "${self.public_ip}"
     }
 
     provisioner "remote-exec" {
@@ -44,6 +45,6 @@ resource "aws_instance" "transaction-service" {
     }
 
     tags = {
-        Name = "transaction-service"
+        Name = "cd-push-host"
     }
 }

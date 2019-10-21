@@ -1,0 +1,2 @@
+Things to consider:
+1. Each EC2 instance can have an assumed role it can take; this is done using the instance profile.
