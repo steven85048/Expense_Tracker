@@ -23,5 +23,5 @@ variable "private_key" {
 }
 
 variable "ansible_user" {
-    default = "ubuntu"
+    default = "provision-central"
 } 

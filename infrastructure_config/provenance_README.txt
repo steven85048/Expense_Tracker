@@ -1,4 +1,5 @@
 # This file provides provenance of the infrastructure operations ran for future use
+- Really, it is just a reference sheet for the commands in the future to relearn.
 
 - Updating the bucket policy to disallow for unencrypted writes and other operations:
     1. cd bucket_config/<project>/

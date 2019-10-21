@@ -40,7 +40,9 @@ resource "aws_instance" "cd-host-push" {
 
     provisioner "local-exec" {
         command = <<EOT
-            sleep 600;
+            sleep 15;
+            #cd ../../host_config_ansible
+            #ansible-playbook -u ${var.ansible_user} --private-key ${var.private_key} 
         EOT
     }
 

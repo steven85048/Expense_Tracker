@@ -17,4 +17,7 @@ The development environment is best completed in the Ubuntu subsystem. However, 
     1. ansible (`sudo apt install python ansible`) 
     2. terraform (see here: https://askubuntu.com/questions/983351/how-to-install-terraform-in-ubuntu) 
     3. awscli with your user setup to the correct account (see here: https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html)
-        1. Also, configure with access keys: `aws configure`       
+        1. Also, configure with access keys: `aws configure`  
+    4. Terragrunt install
+        1. `wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v0.20.5/terragrunt_linux_amd64"`
+        2. `chmod +x /bin/terragrunt`
