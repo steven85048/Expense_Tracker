@@ -5,6 +5,9 @@
     stat:
       path: ~/Expense_Tracker
     register: et_repo_exists
+  
+  - name: Add git to known ssh hosts
+    shell: 'ssh-keyscan github.com >> ~/.ssh/known_hosts'
 
   - name: Clone the Expense_Tracker repo
     shell: 'source /home/provision-central/.profile && git clone git@github.com:steven85048/Expense_Tracker.git'

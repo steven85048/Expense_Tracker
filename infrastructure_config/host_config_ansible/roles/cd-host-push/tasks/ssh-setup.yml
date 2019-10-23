@@ -26,9 +26,11 @@
 
   - name: Change permissions of all .ssh files
     file:
-      path: "{{ item.src }}"
-      mode: 0600
-    with_filetree: /home/provision-central/.ssh
+      path: /home/provision-central/.ssh
+      mode: 0700
+      recurse: yes
+    become: yes
+    become_user: root
 
   # Gets all processes with provision-central and ssh-agent EXCEPT for the grep process searching this
   # In addition, modify the user column to have more characters

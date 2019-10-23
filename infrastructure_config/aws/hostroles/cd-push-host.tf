@@ -37,13 +37,25 @@ resource "aws_iam_role_policy" "cd-push-host-policy" {
             "Resource": "*"
         },
         {
-            "Sid": "SecretsBucketEdit",
+            "Sid": "BucketsEdit",
             "Effect": "Allow",
             "Action": [
                 "s3:PutObject",
                 "s3:DeleteObject"
             ],
-            "Resource": "arn:aws:s3:::expense-tracker-secrets/*"
+            "Resource": [
+                "arn:aws:s3:::expense-tracker-secrets/*",
+                "arn:aws:s3:::expense-tracker-terraform/*"
+            ]
+        },
+        {
+            "Sid": "TerraformLockAcquire",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:DescribeTable",
+                "dynamodb:Query"
+            ],
+            "Resource": "arn:aws:dynamodb:::table/terraform-state-lock-dynamo"
         },
         {
             "Sid": "SecretsBucketReadAndList",
@@ -53,7 +65,8 @@ resource "aws_iam_role_policy" "cd-push-host-policy" {
                 "s3:List*"
             ],
             "Resource": [
-                "arn:aws:s3:::expense-tracker-secrets/*"
+                "arn:aws:s3:::expense-tracker-secrets/*",
+                "arn:aws:s3:::expense-tracker-terraform/*"
             ]
         },
         {

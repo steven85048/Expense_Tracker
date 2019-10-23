@@ -1,7 +1,7 @@
 ---
 - hosts: all
   gather_facts: no
-  remote_user: root
+  remote_user: ubuntu
 
   roles:
     - roles/cd-host-push
