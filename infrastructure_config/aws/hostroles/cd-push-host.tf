@@ -37,11 +37,22 @@ resource "aws_iam_role_policy" "cd-push-host-policy" {
             "Resource": "*"
         },
         {
-            "Sid": "BucketsEdit",
+            "Sid": "TerraformBucketPermissions",
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketVersioning",
+                "s3:CreateBucket"
+            ],
+            "Resource": "arn:aws:s3:::expense-tracker-terraform"
+        },
+        {
+            "Sid": "BucketsEditAndRead",
             "Effect": "Allow",
             "Action": [
                 "s3:PutObject",
-                "s3:DeleteObject"
+                "s3:DeleteObject",
+                "s3:Get*"
             ],
             "Resource": [
                 "arn:aws:s3:::expense-tracker-secrets/*",
@@ -52,22 +63,13 @@ resource "aws_iam_role_policy" "cd-push-host-policy" {
             "Sid": "TerraformLockAcquire",
             "Effect": "Allow",
             "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:GetItem",
                 "dynamodb:DescribeTable",
-                "dynamodb:Query"
+                "dynamodb:DeleteItem",
+                "dynamodb:CreateTable"
             ],
             "Resource": "arn:aws:dynamodb:::table/terraform-state-lock-dynamo"
-        },
-        {
-            "Sid": "SecretsBucketReadAndList",
-            "Effect": "Allow",
-            "Action": [
-                "s3:Get*",
-                "s3:List*"
-            ],
-            "Resource": [
-                "arn:aws:s3:::expense-tracker-secrets/*",
-                "arn:aws:s3:::expense-tracker-terraform/*"
-            ]
         },
         {
             "Sid": "EC2Permissions",
