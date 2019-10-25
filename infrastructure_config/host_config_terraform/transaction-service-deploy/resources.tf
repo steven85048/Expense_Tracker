@@ -1,5 +1,5 @@
 resource "aws_key_pair" "host_key" {
-    key_name = "host_ssh_key"
+    key_name = "transaction-service-ssh-key"
     public_key = "${file(var.public_key)}"
 }
 
@@ -64,7 +64,7 @@ resource "aws_instance" "transaction-service" {
 
     provisioner "local-exec" {
         command = <<EOT
-            sleep 600;
+            sleep 5;
         EOT
     }
 
