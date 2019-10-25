@@ -68,7 +68,7 @@ resource "null_resource" "cd-host-push-provisioner"{
         user = "${var.ansible_user}"
         port = "${var.ssh_port}"
         host = "${aws_instance.cd-host-push.public_ip}"
-        #agent = false
+        agent = false
         timeout = "30m"
     }
 

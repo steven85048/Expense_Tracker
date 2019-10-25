@@ -28,5 +28,5 @@ variable "ssh_port" {
 }
 
 variable "ansible_user" {
-    default = "provision-central"
+    default = "ubuntu"
 } 
