@@ -69,7 +69,7 @@ resource "aws_iam_role_policy" "cd-push-host-policy" {
                 "dynamodb:DeleteItem",
                 "dynamodb:CreateTable"
             ],
-            "Resource": "arn:aws:dynamodb:::table/terraform-state-lock-dynamo"
+            "Resource": "arn:aws:dynamodb:*:*:table/terraform-state-lock-dynamo"
         },
         {
             "Sid": "EC2Permissions",
