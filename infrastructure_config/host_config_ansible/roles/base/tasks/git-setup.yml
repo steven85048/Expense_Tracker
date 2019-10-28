@@ -1,0 +1,12 @@
+---
+# Note that this module assumes that ssh forwarding is set up from the bastion host
+
+- block:
+  - name: Clone the Expense_Tracker repo
+    git:
+      repo: 'git@github.com:steven85048/Expense_Tracker.git'
+      dest: ~/provision/Expense_Tracker
+      clone: yes
+
+  become: yes
+  become_user: provision
