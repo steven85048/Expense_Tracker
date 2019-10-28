@@ -9,5 +9,6 @@
       clone: yes
       accept_hostkey: yes
 
+  sudo: no
   become: yes
   become_user: provision
