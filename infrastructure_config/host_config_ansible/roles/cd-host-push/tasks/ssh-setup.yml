@@ -82,5 +82,16 @@
       dest: /home/provision-central/.ssh/config
       mode: 0770
 
+  # Whenever become is used, the environment variables needed for ssh-agent forwarding is lost;
+  # adding this line prevents that
+  - name: enable SSH forwarding for sudo
+    lineinfile:
+      dest: /etc/sudoers
+      insertafter: '^#?\s*Defaults\s+env_keep\b'
+      line: 'Defaults    env_keep += "SSH_AUTH_SOCK"'
+    become: yes
+    become_user: root
+  
+
   become: yes
   become_user: provision-central
