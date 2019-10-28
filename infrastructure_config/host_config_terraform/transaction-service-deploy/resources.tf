@@ -72,6 +72,7 @@ resource "null_resource" "cd-host-push-provisioner"{
     provisioner "remote-exec" {
         inline = [
             "sudo apt-get update",
+            "sudo apt-get install software-properties-common",
             "sudo apt install python -y"]
     }
 
