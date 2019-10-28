@@ -47,6 +47,19 @@ resource "aws_instance" "transaction-service" {
     iam_instance_profile = "${var.instance_profile_name}"
     vpc_security_group_ids = ["${aws_security_group.cd-host-push-sg.id}"]
 
+    tags = {
+        Name = "transaction-service"
+    }
+}
+
+resource "null_resource" "cd-host-push-provisioner"{
+
+    # We want to run this AFTER the host is successfully provisioned
+    # The public IP is a good way to do this; maybe private IP too for private VPC hosts, but haven't tried
+    triggers = {
+        public_ip = "${aws_instance.transaction-service.public_ip}"
+    }
+
     connection {
         type = "ssh"
         private_key = "${file(var.private_key)}"
@@ -70,9 +83,5 @@ resource "aws_instance" "transaction-service" {
             echo "[main]\n${aws_instance.transaction-service.public_ip}" > inventory/${var.host_name}-hosts
             ansible-playbook -u ${var.ansible_user} -i inventory/${var.host_name}-hosts d-transaction-service.yml
         EOT
-    }
-
-    tags = {
-        Name = "transaction-service"
     }
 }
