@@ -1,3 +1,2 @@
 ---
-- name: install secrets from s3
-  include: install-secrets.yml
+- include: install-secrets.yml

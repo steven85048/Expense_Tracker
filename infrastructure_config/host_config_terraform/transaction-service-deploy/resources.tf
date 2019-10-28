@@ -73,6 +73,7 @@ resource "null_resource" "cd-host-push-provisioner"{
         inline = [
             "sudo apt-get update",
             "sudo apt-get install software-properties-common",
+            "apt-get update",
             "sudo apt install python -y"]
     }
 
