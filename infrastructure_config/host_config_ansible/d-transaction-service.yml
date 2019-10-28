@@ -1,0 +1,8 @@
+---
+- hosts: all
+  gather_facts: no
+  remote_user: ubuntu
+
+  roles:
+    - roles/base
+    - roles/transaction-service

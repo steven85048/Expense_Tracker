@@ -64,7 +64,11 @@ resource "aws_instance" "transaction-service" {
 
     provisioner "local-exec" {
         command = <<EOT
-            sleep 5;
+            sleep 3;
+            cd ../../host_config_ansible
+            touch inventory/${var.host_name}-hosts
+            echo "[main]\n${aws_instance.transaction-service.public_ip}" > inventory/${var.host_name}-hosts
+            ansible-playbook -u ${var.ansible_user} -i inventory/${var.host_name}-hosts d-transaction-service.yml
         EOT
     }
 
