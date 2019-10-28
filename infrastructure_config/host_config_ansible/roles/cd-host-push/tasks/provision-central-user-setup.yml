@@ -35,4 +35,7 @@
       dest: "/etc/sudoers.d/provision"
       content: "provision\tALL=(ALL)\tNOPASSWD: ALL"
       
+  - name: Move the provision password to this user's directory
+    shell: mv /home/root/user-passwords/provision_password /home/provision-central/provision_password
+
   become: yes
