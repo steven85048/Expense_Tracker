@@ -65,7 +65,7 @@ resource "null_resource" "cd-host-push-provisioner"{
         private_key = "${file(var.private_key)}"
         user = "${var.ansible_user}"
         port = "${var.ssh_port}"
-        host = "${self.public_ip}"
+        host = "${aws_instance.transaction-service.public_ip}"
         agent = false
     }
 
