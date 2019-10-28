@@ -1,4 +1,3 @@
 ---
-- name: Create provision user
-
-- name: Clone the repository
+- include: provision-user-setup.yml
+- include: git-setup.yml 
