@@ -17,5 +17,14 @@
       - botocore
       - boto
       - boto3
-
   become: yes
+
+# Whenever become is used, the environment variables needed for ssh-agent forwarding is lost;
+# adding this line prevents that; Add this here so we don't have to make another file
+- name: enable SSH forwarding for sudo
+  lineinfile:
+    dest: /etc/sudoers
+    insertafter: '^#?\s*Defaults\s+env_keep\b'
+    line: 'Defaults    env_keep += "SSH_AUTH_SOCK"'
+  become: yes
+  become_user: root
