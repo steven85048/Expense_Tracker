@@ -1,0 +1,19 @@
+---
+- block:
+  - name: apt install packages
+    apt:
+      name: "{{ packages }}"
+    vars:
+      packages:
+        - git
+        - python
+        - python-pip
+
+  - name: install boto/botocore for s3 through pip
+    pip:
+      name: "{{ item }}"
+      umask: "0022"
+    loop:
+      - botocore
+      - boto
+      - boto3

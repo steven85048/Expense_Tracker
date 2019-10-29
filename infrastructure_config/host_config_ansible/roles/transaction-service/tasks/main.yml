@@ -1,2 +1,3 @@
 ---
+- include: package-install.yml
 - include: install-secrets.yml
