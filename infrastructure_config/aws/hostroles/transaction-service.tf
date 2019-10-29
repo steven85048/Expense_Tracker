@@ -31,16 +31,25 @@ resource "aws_iam_role_policy" "transaction-service-policy" {
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "SecretsBucketReadAndList",
+            "Sid": "SecretsBucketList",
             "Effect": "Allow",
             "Action": [
-                "s3:Get*",
                 "s3:List*"
+            ],
+            "Resource": [
+                "arn:aws:s3:::expense-tracker-secrets"
+            ]
+        },
+        {
+            "Sid": "SecretsBucketGet",
+            "Effect": "Allow",
+            "Action": [
+                "s3:Get*"
             ],
             "Resource": [
                 "arn:aws:s3:::expense-tracker-secrets/*"
             ]
-        }
+        },
     ]
 }   
 EOF
