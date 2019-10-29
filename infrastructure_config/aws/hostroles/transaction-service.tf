@@ -49,7 +49,7 @@ resource "aws_iam_role_policy" "transaction-service-policy" {
             "Resource": [
                 "arn:aws:s3:::expense-tracker-secrets/*"
             ]
-        },
+        }
     ]
 }   
 EOF
