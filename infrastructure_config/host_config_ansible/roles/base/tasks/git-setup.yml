@@ -7,3 +7,5 @@
     dest: /home/provision/Expense_Tracker
     clone: yes
     accept_hostkey: yes
+  become_user: root
+  become: yes

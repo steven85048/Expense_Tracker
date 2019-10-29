@@ -8,8 +8,14 @@
         - git
         - python
         - python-pip
-        - ansible
         - unzip
+
+  - name: Install latest version of ansible
+    shell: |
+      sudo apt-add-repository ppa:ansible/ansible
+      sudo apt update
+      sudo apt install ansible 
+    EOF
 
   - name: install boto/botocore for s3 through pip
     pip:
