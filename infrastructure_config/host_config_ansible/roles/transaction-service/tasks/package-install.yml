@@ -17,3 +17,5 @@
       - botocore
       - boto
       - boto3
+
+  - become: yes
