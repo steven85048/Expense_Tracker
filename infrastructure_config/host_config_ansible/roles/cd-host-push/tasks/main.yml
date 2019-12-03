@@ -1,5 +1,3 @@
 ---
 - include: package-install.yml
 - include: provision-central-user-setup.yml
-- include: ssh-setup.yml
-- include: git-setup.yml

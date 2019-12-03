@@ -13,7 +13,6 @@
       dest: /home/root/user-passwords/{{ item }}
       mode: get
     loop:
-      - "provision-central-password"
       - "provision-password"
 
   - name: Register account password
@@ -28,14 +27,26 @@
     user:
       name: provision-central
       password: "{{ provision_central_password_salted.stdout }}"
+      groups:
+        - docker
+        - sudo
+      createhome: yes
       shell: /bin/bash
-
-  - name: Add no-password sudo permissions for new user
-    copy:
-      dest: "/etc/sudoers.d/provision"
-      content: "provision\tALL=(ALL)\tNOPASSWD: ALL"
       
   - name: Move the provision password to this user's directory
     shell: mv /home/root/user-passwords/provision_password /home/provision-central/provision_password
+
+  - name: Set the initial authorized key to the machine aws public key
+    authorized_key:
+      user: provision-central
+      state: present
+      key: "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/cd-host-push-id_rsa.pub') }}'"
+
+  - name: Force login through public key
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: '^PasswordAuthentication.*yes'
+      line: 'PasswordAuthentication=no'
+    notify: restart_sshd
 
   become: yes
