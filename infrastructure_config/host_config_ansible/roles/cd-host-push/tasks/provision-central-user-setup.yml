@@ -13,7 +13,7 @@
       dest: /home/root/user-passwords/{{ item }}
       mode: get
     loop:
-      - "provision-password"
+      - "provision-central-password"
 
   - name: Register account password
     shell: "cat /home/root/user-passwords/provision-central-password"
@@ -28,13 +28,9 @@
       name: provision-central
       password: "{{ provision_central_password_salted.stdout }}"
       groups:
-        - docker
         - sudo
       createhome: yes
       shell: /bin/bash
-      
-  - name: Move the provision password to this user's directory
-    shell: mv /home/root/user-passwords/provision_password /home/provision-central/provision_password
 
   - name: Set the initial authorized key to the machine aws public key
     authorized_key:
