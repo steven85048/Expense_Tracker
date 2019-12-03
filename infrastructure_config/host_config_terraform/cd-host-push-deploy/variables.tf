@@ -1,5 +1,5 @@
 variable "instance" {
-    default = "t2.nano"
+    default = "t2.micro"
 }
 
 variable "aws_region" {
