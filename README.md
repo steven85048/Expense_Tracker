@@ -22,4 +22,15 @@ The development environment is best completed in the Ubuntu subsystem. However, 
         1. `wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v0.20.5/terragrunt_linux_amd64"`
         2. `chmod +x /bin/terragrunt`
 1. Setup your local SSH to proxy connections to end hosts through the bastion host (cd-push-host)
-    1. 
+    1. Get or create private keys (expense-tracker-id_rsa, cd-host-push-id_rsa, expense-tracker-github-id_rsa), and tell admin to add these keys to authorized_keys if necessary
+    2. Add these keys to your ssh-agent:
+        1. `` eval `ssh-agent` ``
+        2. `ssh-add ~/.ssh/<private-key>`
+        3. Validate added keys: `ssh-add -l`
+1. To validate your connection through the bastion host:
+    1. Consider that you are connecting to the host at: ubuntu@172.31.33.115 (private-IP)
+        1. `cd /Expense_Tracker/infrastructure_config/host_config_ansible`
+        2. `ssh -F ./ssh.cfg ubuntu@172.31.33.115`
+        3. If you have successfully connected, congratulations!
+1. Ansible setup:
+    1. If on windows (working through WSL), `export ANSIBLE_CONFIG=./ssh.cfg`
