@@ -6,16 +6,13 @@
       password: "{{ 'test_pass' | password_hash('sha512') }}"
       shell: /bin/bash
       update_password: on_create
+      groups:
+        - sudo
     register: provision
     
   - name: Force provision change password
     shell: chage -d 0 provision
     register: provision.changed
-
-  - name: Add no-password sudo permissions for new user
-    copy:
-      dest: "/etc/sudoers.d/provision"
-      content: "provision\tALL=(ALL)\tNOPASSWD: ALL"
   
   become: yes
   become_user: root

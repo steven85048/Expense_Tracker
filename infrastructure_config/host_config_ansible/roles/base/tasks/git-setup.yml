@@ -4,6 +4,13 @@
 - name: Ensure SSH Forwarding Agent is running
   command: ssh-add -l
 
+- name: Check if repository already exists
+  stat:
+    path: /home/provision/Expense_Tracker
+  register: et_repo
+  become: yes
+  become_user: root
+
 # IMPORTANT: Since we are using agent forwarding, changing the user loses the ssh-agent!!!
 # Do not want to use become in this case
 - name: Clone the Expense_Tracker repo
@@ -12,8 +19,10 @@
     dest: /home/ubuntu/Expense_Tracker
     clone: yes
     accept_hostkey: yes
+  when: et_repo.stat.exists == false
 
 - name: Move repo to provision user
   command: mv /home/ubuntu/Expense_Tracker /home/provision/Expense_Tracker
   become: yes
   become_user: root
+  when: et_repo.stat.exists == false

@@ -11,7 +11,7 @@ variable "host_name" {
 }
 
 variable "instance_profile_name" {
-  default = "networks-messaging-server"
+  default = "networks-messaging-server-profile"
 }
 
 variable "public_key" {
