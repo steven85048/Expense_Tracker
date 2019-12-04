@@ -84,7 +84,7 @@ resource "null_resource" "cd-host-push-provisioner"{
             cd ../../host_config_ansible
             touch inventory/${var.host_name}-hosts
             echo "[main]\n${aws_instance.cd-host-push.public_ip}" > inventory/${var.host_name}-hosts
-            #ansible-playbook -u ${var.ansible_user} -i inventory/${var.host_name}-hosts cd-host-push.yml
+            ansible-playbook -u ${var.ansible_user} -i inventory/${var.host_name}-hosts cd-host-push.yml
         EOT
     }
 }

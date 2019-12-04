@@ -21,3 +21,5 @@ The development environment is best completed in the Ubuntu subsystem. However, 
     4. Terragrunt install
         1. `wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v0.20.5/terragrunt_linux_amd64"`
         2. `chmod +x /bin/terragrunt`
+1. Setup your local SSH to proxy connections to end hosts through the bastion host (cd-push-host)
+    1. 

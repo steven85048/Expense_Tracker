@@ -3,7 +3,7 @@
   - name: Create provision user
     user: 
       name: provision
-      password: "{{ lookup('file', '/home/provision-central/provision-password') | password_hash('sha512') }}"
+      password: "{{ 'test_pass' | password_hash('sha512') }}"
       shell: /bin/bash
       update_password: on_create
     register: provision
