@@ -14,5 +14,18 @@
     shell: chage -d 0 provision
     register: provision.changed
   
+  - name: Set the initial authorized key to the machine aws public key
+    authorized_key:
+      user: provision
+      state: present
+      key: "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/expense-tracker-id_rsa.pub') }}'"
+
+  - name: Force login through public key
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: '^PasswordAuthentication.*yes'
+      line: 'PasswordAuthentication=no'
+    notify: restart_sshd
+
   become: yes
   become_user: root

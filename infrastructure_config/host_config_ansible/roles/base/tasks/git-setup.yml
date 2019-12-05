@@ -11,18 +11,26 @@
   become: yes
   become_user: root
 
-# IMPORTANT: Since we are using agent forwarding, changing the user loses the ssh-agent!!!
-# Do not want to use become in this case
-- name: Clone the Expense_Tracker repo
-  git:
-    repo: 'git@github.com:steven85048/Expense_Tracker.git'
-    dest: /home/ubuntu/Expense_Tracker
-    clone: yes
-    accept_hostkey: yes
-  when: et_repo.stat.exists == false
+- block:
+  # IMPORTANT: Since we are using agent forwarding, changing the user loses the ssh-agent!!!
+  # Do not want to use become in this case
+  - name: Clone the Expense_Tracker repo
+    git:
+      repo: 'git@github.com:steven85048/Expense_Tracker.git'
+      dest: /home/ubuntu/Expense_Tracker
+      clone: yes
+      accept_hostkey: yes
 
-- name: Move repo to provision user
-  command: mv /home/ubuntu/Expense_Tracker /home/provision/Expense_Tracker
-  become: yes
-  become_user: root
-  when: et_repo.stat.exists == false
+  - name: Move repo to provision user
+    command: mv /home/ubuntu/Expense_Tracker /home/provision/Expense_Tracker
+    become: yes
+    become_user: root
+
+  - name: Change the owner of the repository
+    command: sudo chown provision:provision . -R
+    become: yes
+    become_user: root
+    args:
+      chdir: /home/provision/Expense_Tracker/
+
+  when:  et_repo.stat.exists == false
