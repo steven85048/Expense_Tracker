@@ -48,6 +48,15 @@ resource "aws_security_group" "networks-messaging-server-sg" {
     # We only allow SSH connection from the bastion host (cd-host-push)
     cidr_blocks = ["${data.terraform_remote_state.bastion_host.outputs.bastion_private_ip}/32"]
   }
+
+  ingress {
+    from_port = var.messaging_udp_port
+    to_port = var.messaging_udp_port
+    protocol = "udp"
+
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
 }
 
 resource "aws_instance" "networks-messaging-server" {

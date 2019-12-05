@@ -26,6 +26,10 @@ variable "ssh_port" {
   default = 22
 }
 
+variable "messaging_udp_port" {
+  default = 5006
+}
+
 variable "ansible_user" {
   default = "ubuntu"
 }
