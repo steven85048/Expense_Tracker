@@ -20,5 +20,16 @@
     pip:
       name: docker
 
+  - name: Ensure docker group exists
+    group:
+      name: docker
+      state: present
+
+  - name: Add {{ default_user }} to docker group
+    user: 
+      name: "{{ default_user }}"
+      groups: docker
+      append: yes
+
   become: yes
   become_user: root
