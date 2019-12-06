@@ -1,34 +1,9 @@
 ---
-- name: Ensure SSH Forwarding Agent is running
-  command: ssh-add -l
-
-- name: Check if repository already exists
-  stat:
-    path: /home/provision/Networks_Client_Server
-  register: ncs_repo
-  become: yes
-  become_user: root
-
-- block:
-  # IMPORTANT: Since we are using agent forwarding, changing the user loses the ssh-agent!!!
-  # Do not want to use become in this case
-  - name: Clone the Expense_Tracker repo
-    git:
-      repo: 'git@github.com:steven85048/Networks_Client_Server.git'
-      dest: /home/ubuntu/Networks_Client_Server
-      clone: yes
-      accept_hostkey: yes
-
-  - name: Move repo to provision user
-    command: mv /home/ubuntu/Networks_Client_Server /home/provision/Networks_Client_Server
-    become: yes
-    become_user: root
-
-  - name: Change the owner of the repository
-    command: sudo chown provision:provision . -R
-    become: yes
-    become_user: root
-    args:
-      chdir: /home/provision/Networks_Client_Server/
-
-  when:  ncs_repo.stat.exists == false
+# May become a submodule of the main repo later, so this may be removed eventually
+- name: "Clone the {{ service_repo }} repo with ssh agent"
+  include_role: 
+    name: utility_roles/git-clone-with-agent
+  vars:
+    repo_ssh_url: "git@github.com:steven85048/{{ service_repo }}.git"
+    repo_name: "{{ service_repo }}"
+    repo_owner: "{{ default_user }}"

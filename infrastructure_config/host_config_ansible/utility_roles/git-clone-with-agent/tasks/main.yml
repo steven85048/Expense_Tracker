@@ -27,7 +27,7 @@
     become_user: root
 
   - name: "Change the owner of the repository to {{ repo_owner }}"
-    command: "sudo chown {{ repo_owner }}:{{ repo_owner }} . -R"
+    command: "chown {{ repo_owner }}:{{ repo_owner }} . -R"
     become: yes
     become_user: root
     args:
