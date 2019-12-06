@@ -1,0 +1,4 @@
+---
+default_user: provision
+default_repo: Expense_Tracker
+default_user_key: /.ssh/expense-tracker-id_rsa.pub

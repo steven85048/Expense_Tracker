@@ -1,0 +1,36 @@
+---
+# Note that this module assumes that ssh forwarding is set up from the bastion host
+
+- name: Ensure SSH Forwarding Agent is running
+  command: ssh-add -l
+
+- name: Check if repository already exists
+  stat:
+    path: "/home/{{ repo_owner }}/{{ repo_name }}"
+  register: repo_stat
+  become: yes
+  become_user: root
+
+- block:
+  # IMPORTANT: Since we are using agent forwarding, changing the user loses the ssh-agent!!!
+  # Do not want to use become in this case
+  - name: Clone the Expense_Tracker repo
+    git:
+      repo: "{{ repo_ssh_url }}"
+      dest: "/home/ubuntu/{{ repo_name }}"
+      clone: yes
+      accept_hostkey: yes
+
+  - name: "Move repo to {{ repo_owner }} user"
+    command: "mv /home/ubuntu/{{ repo_name }} /home/{{ repo_owner }}/{{ repo_name }}"
+    become: yes
+    become_user: root
+
+  - name: "Change the owner of the repository to {{ repo_owner }}"
+    command: "sudo chown {{ repo_owner }}:{{ repo_owner }} . -R"
+    become: yes
+    become_user: root
+    args:
+      chdir: "/home/{{ repo_owner }}/{{ repo_name }}/"
+
+  when:  repo_stat.stat.exists == false

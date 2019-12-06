@@ -1,24 +1,18 @@
 ---
 - block: 
-  - name: Create provision user
+  - name: "Create {{ default_user }} user"
     user: 
-      name: provision
-      password: "{{ 'test_pass' | password_hash('sha512') }}"
+      name: "{{ default_user }}"
       shell: /bin/bash
-      update_password: on_create
       groups:
         - sudo
-    register: provision
-    
-  - name: Force provision change password
-    shell: chage -d 0 provision
-    register: provision.changed
+    register: "{{ default_user }}"
   
   - name: Set the initial authorized key to the machine aws public key
     authorized_key:
-      user: provision
+      user: "{{ default_user }}"
       state: present
-      key: "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/expense-tracker-id_rsa.pub') }}'"
+      key: "{{ lookup('file', lookup('env', 'HOME') + default_user_key ) }}'"
 
   - name: Force login through public key
     lineinfile:
