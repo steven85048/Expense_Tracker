@@ -19,12 +19,18 @@
       - docker-ce 
       - docker-compose
 
-  - name: Install Docker Module for Python
+  - name: Install Docker python dependencies
     pip:
       name: "{{ item }}"
     loop:
       - docker
-      - docker-compose
+      - docker-compose==1.25.0
+
+  # pyOpenSSL is messed up if using the default version for some reason
+  - name: Update pyOpenSSL
+    easy_install:
+      name: pyOpenSSL
+      state: latest
 
   - name: Ensure docker group exists
     group:
@@ -36,6 +42,13 @@
       name: "{{ default_user }}"
       groups: docker
       append: yes
+
+  - name: Create ~/.docker/ directory
+    file:
+      path: "/home/{{ default_user }}/.docker"
+      state: directory
+      owner: "{{ default_user }}"
+      group: "{{ default_user }}"
 
   - name: Update ~/.docker/config.json
     copy:
