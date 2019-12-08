@@ -21,7 +21,10 @@
 
   - name: Install Docker Module for Python
     pip:
-      name: docker
+      name: "{{ item }}"
+    loop:
+      - docker
+      - docker-compose
 
   - name: Ensure docker group exists
     group:
@@ -33,6 +36,14 @@
       name: "{{ default_user }}"
       groups: docker
       append: yes
+
+  - name: Update ~/.docker/config.json
+    copy:
+      src: config.json
+      dest: "/home/{{ default_user }}/.docker/config.json"
+      owner: "{{ default_user }}"
+      group: "{{ default_user }}"
+      mode: '0644'
 
   become: yes
   become_user: root

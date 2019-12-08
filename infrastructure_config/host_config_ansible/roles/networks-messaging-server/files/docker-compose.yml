@@ -15,3 +15,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 30
+  server:
+    container_name: networks_messaging_server
+    image: 003195358776.dkr.ecr.us-east-2.amazonaws.com/expense_tracker_ecr:latest
+    ports:
+      - "5006:5006"

@@ -105,7 +105,7 @@ resource "null_resource" "networks-messaging-server-provisioner" {
             cd ../../host_config_ansible
             touch inventory/${var.host_name}-hosts
             echo "[main]\n${aws_instance.networks-messaging-server.private_ip}" > inventory/${var.host_name}-hosts
-            # ansible-playbook -u ${var.ansible_user} -i inventory/${var.host_name}-hosts networks-messaging-server.yml
+            ansible-playbook -u ${var.ansible_user} -i inventory/${var.host_name}-hosts networks-messaging-server.yml
         
 EOT
 

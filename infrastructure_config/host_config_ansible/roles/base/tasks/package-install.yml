@@ -18,9 +18,15 @@
       - curl
       - software-properties-common
       - python3-pip 
+      - python-pip
       - virtualenv
       - python3-setuptools
       - awscli
 
+  - name: Install Amazon ECR Credential Helper
+    get_url:
+      url: https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/0.3.1/linux-amd64/docker-credential-ecr-login
+      dest: /bin/docker-credential-ecr-login
+      
   become: yes
   become_user: root

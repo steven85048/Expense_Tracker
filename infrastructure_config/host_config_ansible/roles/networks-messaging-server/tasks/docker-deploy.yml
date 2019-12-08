@@ -1,0 +1,21 @@
+---
+- block:
+  - name: Copy docker-compose 
+    copy:
+      src: docker-compose.yml
+      dest: ~/docker-compose.yml
+      owner: "{{ default_user }}"
+      group: "{{ default_user }}"
+      mode: '0644'
+
+  - name: Pull latest image of networks-messaging-server
+    command: "docker pull 003195358776.dkr.ecr.us-east-2.amazonaws.com/expense_tracker_ecr:latest" 
+
+  - name: Run docker compose on the passed docker-compose
+    docker_service:
+      project_src: ~/
+      build: no
+
+  become: yes
+  become_user: "{{ default_user }}"
+  
