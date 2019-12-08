@@ -9,9 +9,9 @@ services:
     ports:
       - "5432:5432"
   watchtower:
-    container_name: watchtower
+    container_name: watchtower-ecr
     restart: always
-    image: v2tec/watchtower
+    image: andyault/watchtower-ecr:armhf-latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 30

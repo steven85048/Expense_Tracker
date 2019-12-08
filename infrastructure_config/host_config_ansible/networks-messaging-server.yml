@@ -4,5 +4,5 @@
   remote_user: ubuntu
 
   roles:
-    - roles/base
+    #- roles/base
     - roles/networks-messaging-server
