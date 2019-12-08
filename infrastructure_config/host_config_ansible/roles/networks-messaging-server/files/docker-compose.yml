@@ -20,3 +20,4 @@ services:
     image: 003195358776.dkr.ecr.us-east-2.amazonaws.com/expense_tracker_ecr:latest
     ports:
       - "5006:5006"
+      - "5006:5006/udp"
