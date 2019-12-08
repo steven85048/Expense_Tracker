@@ -20,6 +20,7 @@
       - python3-pip 
       - virtualenv
       - python3-setuptools
+      - awscli
 
   become: yes
   become_user: root
