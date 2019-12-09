@@ -8,11 +8,11 @@ services:
     image: postgres
     environment:
       # For dev purposes; change later of course (or not?)
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=12345
       - POSTGRES_DB=networks-messaging-server
     ports:
-      - "54320:5432"
+      - "5432:5432"
     volumes: 
       # For data persistence on container change
       - ~/postgres-data:/var/lib/postgresql/data
