@@ -6,14 +6,23 @@ services:
   postgresql:
     container_name: postgres
     image: postgres
+    environment:
+      # For dev purposes; change later of course (or not?)
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=networks-messaging-server
     ports:
-      - "5432:5432"
+      - "54320:5432"
+    volumes: 
+      # For data persistence on container change
+      - ~/postgres-data:/var/lib/postgresql/data
   watchtower:
-    container_name: watchtower-ecr
+    container_name: watchtower
     restart: always
-    image: andyault/watchtower-ecr:armhf-latest
+    image: rabaco/watchtower-ecr:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ~/.docker/config.json:/config.json
     command: --interval 30
   server:
     container_name: networks_messaging_server

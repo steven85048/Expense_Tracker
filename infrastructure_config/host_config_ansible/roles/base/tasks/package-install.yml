@@ -22,6 +22,7 @@
       - virtualenv
       - python3-setuptools
       - awscli
+      - postgresql-client
 
   - name: Install Amazon ECR Credential Helper
     get_url:
