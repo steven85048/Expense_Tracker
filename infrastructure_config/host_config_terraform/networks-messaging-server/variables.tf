@@ -30,6 +30,10 @@ variable "messaging_udp_port" {
   default = 5006
 }
 
+variable "postgresql_port" {
+  default = "5432"
+}
+
 variable "ansible_user" {
   default = "ubuntu"
 }

@@ -57,6 +57,15 @@ resource "aws_security_group" "networks-messaging-server-sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    from_port = var.postgresql_port
+    to_port = var.postgresql_port
+    protocol = "tcp"
+
+    # Change to only server IP in production
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
 }
 
 resource "aws_instance" "networks-messaging-server" {
